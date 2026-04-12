@@ -2,7 +2,7 @@ stages {
 stage('Deploy') {
 steps {
 sh '''
-ssh -o StrictHostKeyChecking=no ubuntu@35.154.183.176 "
+ssh -o StrictHostKeyChecking=no ubuntu@65.0.204.151  "
 cd backend-aws-testing || git clone https://github.com/OMzaiswal/backend-aws-testing.git && cd backend-aws-testing
 
 git pull
