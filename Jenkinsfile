@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Deploy') {
             steps {
-                sshagent(['ubuntu']) {
+                sshagent(['ec2-key']) {
                     sh '''
                     ssh -o StrictHostKeyChecking=no ubuntu@65.0.204.151 "
 
