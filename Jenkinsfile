@@ -1,17 +1,29 @@
-sh '''
-ssh -o StrictHostKeyChecking=no ubuntu@65.0.204.151 "
+pipeline {
+    agent any
 
-export PATH=$PATH:/usr/bin:/usr/local/bin
+    stages {
+        stage('Deploy') {
+            steps {
+                sshagent(['ubuntu']) {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no ubuntu@65.0.204.151 "
 
-if [ ! -d backend-aws-testing ]; then
-  git clone https://github.com/OMzaiswal/backend-aws-testing.git
-fi
+                    export PATH=$PATH:/usr/bin:/usr/local/bin
 
-cd backend-aws-testing
-git pull
+                    if [ ! -d backend-aws-testing ]; then
+                      git clone https://github.com/OMzaiswal/backend-aws-testing.git
+                    fi
 
-npm install
+                    cd backend-aws-testing
+                    git pull
 
-pm2 restart app || pm2 start index.js --name app
-"
-'''
+                    npm install
+
+                    pm2 restart app || pm2 start index.js --name app
+                    "
+                    '''
+                }
+            }
+        }
+    }
+}
