@@ -6,7 +6,7 @@ pipeline {
             steps {
                 sshagent(['ec2-key']) {
                     sh '''
-                    ssh -o StrictHostKeyChecking=no ubuntu@65.0.204.151 "
+                    ssh -o StrictHostKeyChecking=no ubuntu@65.0.204.151 << 'EOF'
 
                     export PATH=$PATH:/usr/bin:/usr/local/bin
 
@@ -20,7 +20,8 @@ pipeline {
                     npm install
 
                     pm2 restart app || pm2 start index.js --name app
-                    "
+
+                    EOF
                     '''
                 }
             }
